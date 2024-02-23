@@ -9,6 +9,10 @@ import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import java.util.List;
 
+import org.eclipse.microprofile.reactive.messaging.Channel;
+import org.eclipse.microprofile.reactive.messaging.Emitter;
+import org.eclipse.microprofile.reactive.messaging.Incoming;
+
 @Path("/blogs")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -16,6 +20,10 @@ public class BlogResource {
 
     @Inject
     BlogRepository blogRepository;
+
+    @Inject
+    @Channel("blogs-out")
+    Emitter<String> blogPostEmitter;
 
     public BlogResource(BlogRepository blogRepository) {
         this.blogRepository = blogRepository;
@@ -34,11 +42,13 @@ public class BlogResource {
         newBlog.setContent(blogDto.getContent());
 
         blogRepository.persist(newBlog);
+
+        blogPostEmitter.send(newBlog.getContent());
     }
-    /*
-     * @POST
-     * public void createBlog(Blog blog) {
-     * blogRepository.persist(blog);
-     * }
-     */
+
+    @Incoming("validation-result-out")
+    public void updateValidationStatus(String validationResult) {
+        System.out.println("Update is: ==> " + validationResult);
+    }
+
 }
