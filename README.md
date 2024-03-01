@@ -9,7 +9,9 @@ The project uses Kafka as streaming plattform
 ```PowerShell
 cd .\blog-backend\
 .\mvnw compile quarkus:dev
+```
 
+```PowerShell
 cd .\text-validator\
 .\mvnw compile quarkus:dev
 ```
@@ -61,4 +63,16 @@ POST → content **doesn't** contain a 0
 "valid": true,
 "validationDate": "2024-02-27"
 }
+```
+
+Create network
+
+```Shell
+docker network create blog-nw
+```
+
+Create MYSQL container
+
+```Shell
+docker run --name mysql-blog -p 3306:3306 --network blog-nw -e MYSQL_ROOT_PASSWORD=vs4tw -e MYSQL_USER=dbuser -e MYSQL_PASSWORD=dbuser -e MYSQL_DATABASE=blogdb -d mysql:8.0
 ```
