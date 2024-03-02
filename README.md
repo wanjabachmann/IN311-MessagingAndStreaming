@@ -1,12 +1,14 @@
 # Blog Validation
 
-This project conatins an example of a blog backend and a validation service.
-It processes the blog content and determines whether they are valid or not.
-The project uses Kafka as streaming plattform
+This project quickly simulates a blog backend and a validation service.
+It processes the blog content and determines whether it is valid or not.
+The project uses Kafka as streaming plattform.
 
-## ⚒️ Docker Container Envirnoment
+# ⚒️ Docker Container Envirnoment
 
-🏃🏻‍♂️Start the envirnoment:
+## 🏃🏻‍♂️Run the prod envirnoment:
+
+💨 Start the envirnoment:
 
 ```Shell
 docker-compose up -d
@@ -21,7 +23,10 @@ docker-compose down
 🔗 Access to Swagger UI in producation:<br>
 [http://localhost:8080/q/swagger-ui/](http://localhost:8080/q/swagger-ui/)
 
-## 🧑🏻‍💻 Start the project in dev Mode
+The container images are available here:
+https://github.com/wanjabachmann?tab=packages
+
+## 🧑🏻‍💻 Start the project in dev mode
 
 ```PowerShell
 cd .\blog-backend\
@@ -33,16 +38,17 @@ cd .\text-validator\
 .\mvnw compile quarkus:dev
 ```
 
-Access to Swagger UI in development:<br>
+🔗 Access to Swagger UI in development:<br>
 [http://localhost:8080/q/swagger-ui/#/](http://localhost:8080/q/swagger-ui/#/)
 
-## Kafka Toplics
-
+🔗 Access to Kafka Topics in development:<br>
 [http://localhost:8080/q/dev-ui/io.quarkus.quarkus-kafka-client/topics](http://localhost:8080/q/dev-ui/io.quarkus.quarkus-kafka-client/topics)
 
-## Example Valid
+## Example Valid Post
 
-POST → content contains a 0
+### POST → content contains a 0
+
+SwaggerUi:
 
 ```JSON
 {
@@ -50,6 +56,16 @@ POST → content contains a 0
     "content": "Is this blog valid? 0"
 }
 ```
+
+httpie:
+
+```JSON
+http -v POST :8080/blogs title="Title of the Blog" content="Is this blog valid? 0"
+```
+
+### GET Request
+
+SwaggerUi:
 
 ```JSON
 {
@@ -63,7 +79,9 @@ POST → content contains a 0
 
 ## Example Not Valid
 
-POST → content **doesn't** contain a 0
+### POST → content **doesn't** contain a 0
+
+SwaggerUi:
 
 ```JSON
 {
@@ -71,6 +89,16 @@ POST → content **doesn't** contain a 0
     "content": "Is this blog valid?"
 }
 ```
+
+httpie:
+
+```JSON
+http -v POST :8080/blogs title="Title of the Blog" content="Is this blog valid?"
+```
+
+### Get Request
+
+SwaggerUi:
 
 ```JSON
 {
@@ -80,4 +108,10 @@ POST → content **doesn't** contain a 0
     "valid": true,
     "validationDate": "2024-02-27"
 }
+```
+
+httpie:
+
+```JSON
+http -v GET :8080/blogs
 ```
