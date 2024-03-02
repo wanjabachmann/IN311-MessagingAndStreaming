@@ -1,26 +1,26 @@
 # Blog Validation
 
-This project quickly simulates a blog backend and a validation service.
+This project quickly simulates a quarkus blog backend and a quarkus validation service.
 It processes the blog content and determines whether it is valid or not.
 The project uses Kafka as streaming plattform.
 
-# ⚒️ Docker Container Envirnoment
+# ⚒️ Docker Container Environment
 
-## 🏃🏻‍♂️Run the prod envirnoment:
+## 🏃🏻‍♂️Run the prod environment:
 
-💨 Start the envirnoment:
+💨 Start the environment:
 
 ```Shell
 docker-compose up -d
 ```
 
-🤚🏻 Stop the envirnoment:
+🤚🏻 Stop the environment:
 
 ```Shell
 docker-compose down
 ```
 
-🔗 Access to Swagger UI in producation:<br>
+🔗 Access to Swagger UI in production:<br>
 [http://localhost:8080/q/swagger-ui/](http://localhost:8080/q/swagger-ui/)
 
 The container images are available here:
